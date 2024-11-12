@@ -7,9 +7,21 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB', err));
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+  })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => {
+      console.error('Could not connect to MongoDB', err);
+      process.exit(1);
+    });
+  
+  mongoose.connection.on('error', err => {
+    console.error('MongoDB connection error:', err);
+  });
 
 app.use('/todos', todosRouter);
 
