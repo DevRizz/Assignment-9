@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Todo = require('../models/todo');
 
-// POST /todos - Create a new to-do
+
 router.post('/', async (req, res) => {
   try {
     if (!req.body.title) {
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /todos - Retrieve all to-dos
+
 router.get('/', async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -29,12 +29,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /todos/:id - Retrieve a specific to-do by ID
+
 router.get('/:id', getTodo, (req, res) => {
   res.json(res.todo);
 });
 
-// PUT /todos/:id - Update a specific to-do by ID
+
 router.put('/:id', getTodo, async (req, res) => {
   if (req.body.title != null) {
     res.todo.title = req.body.title;
@@ -53,7 +53,7 @@ router.put('/:id', getTodo, async (req, res) => {
   }
 });
 
-// DELETE /todos/:id - Delete a specific to-do by ID
+
 router.delete('/:id', async (req, res) => {
   try {
     const todo = await Todo.findByIdAndDelete(req.params.id);
@@ -66,7 +66,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Middleware to get a specific todo by ID
+
 async function getTodo(req, res, next) {
   let todo;
   try {
